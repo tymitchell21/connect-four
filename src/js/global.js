@@ -26,7 +26,7 @@ function display (color, destination) {
 
 function clickedColumn (e) {
     turn = !turn
-    
+    hu
 }
 
 // adds click event listener to each column
