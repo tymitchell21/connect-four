@@ -1,5 +1,6 @@
 let columns = document.querySelectorAll(".column");
 let turn = false;
+let currentSetUp = [6,6,6,6,6,6,6]
 
 // showCoin 
 function showCoin (e) {
@@ -12,7 +13,9 @@ function showCoin (e) {
 // delete top coin
 function hideCoin (e) {
     const currentColumn = e.currentTarget;
-    currentColumn.firstElementChild.removeChild(currentColumn.firstElementChild.firstElementChild)
+    if (currentColumn.firstElementChild.firstElementChild) {
+        currentColumn.firstElementChild.removeChild(currentColumn.firstElementChild.firstElementChild)
+    }
 }
 
 // function used to display a coin
@@ -24,9 +27,20 @@ function display (color, destination) {
     destination.appendChild(newElement);
 }
 
+function addCoin(row, column) {
+    
+}
+
 function clickedColumn (e) {
+    hideCoin(e)
     turn = !turn
-    hu
+    let column = parseInt(e.currentTarget.id.slice(1,2))
+    
+    if (currentSetUp[column-1]>0) {
+        addCoin(currentSetUp[column-1], column)
+    }
+    console.log(currentSetUp)
+    currentSetUp[column-1]--
 }
 
 // adds click event listener to each column
