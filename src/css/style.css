@@ -1,0 +1,45 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+#game-wrap {
+    width: fit-content;
+    height: fit-content;
+}
+#game-container {
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+}
+.column {
+    height: fit-content;
+    height: fit-content;
+}
+.top {
+    width: 50px;
+    height: 50px;
+}
+.box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border: 1px solid blue;
+}
+.red {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: red;
+}
+.black {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: black;
+}
+
