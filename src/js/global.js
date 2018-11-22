@@ -27,20 +27,41 @@ function display (color, destination) {
     destination.appendChild(newElement);
 }
 
-function addCoin(row, column) {
-    
+function addCoin(row, column, e) {
+    hideCoin(e)
+    var newElement = document.createElement('div');
+    if (turn) newElement.classList.add('red')
+    else newElement.classList.add('black')
+    document.querySelector(`#r${column}${row}`).appendChild(newElement)
+    var pos = -50*row;
+    console.log(pos)
+    var id = setInterval(frame, 5);
+    function frame() {
+        if (pos == 0) {
+            clearInterval(id);
+        } else {
+            pos++; 
+            newElement.style.top = pos + 'px';
+        }
+    }
 }
 
 function clickedColumn (e) {
-    hideCoin(e)
-    turn = !turn
     let column = parseInt(e.currentTarget.id.slice(1,2))
-    
     if (currentSetUp[column-1]>0) {
-        addCoin(currentSetUp[column-1], column)
+        addCoin(currentSetUp[column-1], column, e)
     }
-    console.log(currentSetUp)
     currentSetUp[column-1]--
+    turn = !turn
+    changeTurn()
+}
+
+function changeTurn () {
+    if (turn) {
+        document.querySelector('#turn').innerHTML = "It is Red's turn"
+    } else {
+        document.querySelector('#turn').innerHTML = "It is Black's turn"
+    }
 }
 
 // adds click event listener to each column
