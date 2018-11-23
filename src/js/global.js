@@ -147,11 +147,11 @@ function displayWin () {
     newButton.id = 'reset'
     // if it is red's turn, creates text node 'Red Wins'
     if (turn) {
-        var newText = document.createTextNode("Red Win's!");
+        var newText = document.createTextNode("Red Wins!");
     }
     // if it is black's turn, creates text node 'Black Wins'
     else {
-        var newText = document.createTextNode("Black Win's!");
+        var newText = document.createTextNode("Black Wins!");
     }
     // creates new text node for try again button
     var newText2 = document.createTextNode("Play Again?");
