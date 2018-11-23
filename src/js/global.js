@@ -3,152 +3,194 @@ let turn = false;
 let currentSetUp = [6,6,6,6,6,6,6]
 let positions = [['w','w','w','w','w','w'],['w','w','w','w','w','w'],['w','w','w','w','w','w'],['w','w','w','w','w','w'],['w','w','w','w','w','w'],['w','w','w','w','w','w'],['w','w','w','w','w','w']]
 
-// showCoin 
+// runs when a column is clicked
+function clickedColumn (e) {
+    // sets column to id of the clicked column (grabbing the column number from the id)
+    let column = parseInt(e.currentTarget.id.slice(1,2))
+    // currentSetUp keeps track of the # of free space in each column.  if it is greater than zero, add a coin
+    if (currentSetUp[column-1]>0) {
+        // calls the function addCoin and passes the free spaces, column number, and e
+        addCoin(currentSetUp[column-1], column, e)
+    }
+    // subtracts one from currentSetUp[column-1], representing one less free space in column
+    currentSetUp[column-1]--
+    // runs the function changeTurn
+    changeTurn()
+}
+// shows a coin above the column that the mouse is hovering over
 function showCoin (e) {
+    // grabs the current column that the mouse is over and sets it to currentColumn
     const currentColumn = e.currentTarget;
+    // grabs the first element child of the current child (a div about the rest of the game), and sets it to destination
     const destination = currentColumn.firstElementChild
+    // if it is red's turn, displays a red coin above the column
     if (turn) display ('red', destination)
+    // if it is black's turn, displays a black one
     else display ('black', destination)
 }
-
-// delete top coin
+// deletes the coin from showCoin once the mouse is no longer hovering over the column
 function hideCoin (e) {
+    // sets the current target to variable current column
     const currentColumn = e.currentTarget;
+    // if there is disk in the top div
     if (currentColumn.firstElementChild.firstElementChild) {
+        // then remove that disk
         currentColumn.firstElementChild.removeChild(currentColumn.firstElementChild.firstElementChild)
     }
 }
-
 // function used to display a coin
 function display (color, destination) {
-    // creates p element and adds x to it 
-    var newElement = document.createElement('div');
-    newElement.classList.add(color)
-    // adds p element to ans div
-    destination.appendChild(newElement);
+    // creates div element and sets it to newDisk
+    var newCoin = document.createElement('div');
+    newCoin.classList.add(color)
+    // adds newCoin element to destination
+    destination.appendChild(newCoin);
 }
-
+// function that adds the coin to its position
 function addCoin(row, column, e) {
+    // begins by hiding the coin that is hovering over the column
     hideCoin(e)
-
-    var newElement = document.createElement('div');
-    if (turn) newElement.classList.add('red')
-    else newElement.classList.add('black')
-    document.querySelector(`#r${column}${row}`).appendChild(newElement)
-    
+    // creates a new div and sets it to newCoin
+    var newCoin = document.createElement('div');
+    // if it is red's turn, adds the red class
+    if (turn) newCoin.classList.add('red')
+    // else adds the black class
+    else newCoin.classList.add('black')
+    // grabs the next open position in column based on column and row variables, and appends the newCoin to it
+    document.querySelector(`#r${column}${row}`).appendChild(newCoin)
+    // start position is determined by -50*row (each box is 50px tall)
     var pos = -50*row;
-    newElement.style.top = pos + 'px';
+    // set's newCoin's starting position to pos
+    newCoin.style.top = pos + 'px';
+    // creates time interval
     var id = setInterval(frame, 5);
+    // This moves the coin from it's top position to it's resting position
     function frame() {
         if (pos == 0) {
             clearInterval(id);
         } else {
             pos++; 
-            newElement.style.top = pos + 'px';
+            newCoin.style.top = pos + 'px';
         }
     }
-    console.log(column, row)
+    // calls function gameTracker
     gameTracker (column, row)
+    // calls function checkWin
     checkWin()
 }
-
+// keeps track of the game with positions double array
 function gameTracker (column, row) {
+    // changes 'w' to 'r' if it is red's turn, in the current position
     if (turn) {
         positions[column-1][row-1] = 'r'
+    // changes 'w' to 'b' if it is black's turn
     } else {
         positions[column-1][row-1] = 'b'
     }
 }
-
-function displayWin () {
-    // creates p element and adds x to it 
-    var newH2 = document.createElement('h2');
-    var newButton = document.createElement('button');
-    newButton.id = 'reset'
-    if (turn) {
-        var newText = document.createTextNode("Red Win's!");
-    }
-    else {
-        var newText = document.createTextNode("Black Win's!");
-    }
-    var newText2 = document.createTextNode("Play Again?");
-    newButton.appendChild(newText2)
-    newH2.appendChild(newText);
-    // adds p element to ans div
-    var destination = document.getElementById('winner');
-    destination.appendChild(newH2);
-    destination.appendChild(newButton);
-    lockGame()
-    document.getElementById('reset').addEventListener('click', reset);
-}
-
-function lockGame() {
-    // adds click event listener to each column
-    columns.forEach (column => {
-        column.removeEventListener('click', clickedColumn);
-    })
-    // adds a mouseover event listener to each column
-    columns.forEach (column => {
-        column.removeEventListener('mouseover', showCoin);
-    })
-    // adds a mouseout event listener to each column
-    columns.forEach (column => {
-        column.removeEventListener('mouseout', hideCoin);
-    })
-}
-
-function reset () {
-    window.location.reload();
-}
-
+// function that checks to see if anybody has won
 function checkWin () {
+    // runs through the columns
     for (let i=0; i<positions.length; i++) {
+        // runs through the top three rows
         for (let j=0; j<3; j++) {
+            // makes sure the position isn't just black (no disk)
             if (positions[i][j]!='w'){
+                // then it checks to see if there is four of a kind vertical
+                if (positions[i][j] === positions[i][j+1] && positions[i][j] === positions[i][j+2] && positions[i][j] === positions[i][j+3]) {
+                    // runs function displayWin
+                    displayWin()
+                }
+                // if i = 3, or it is in the middle column
                 if (i===3) {
-                    if (positions[i][j] === positions[i][j+1] && positions[i][j] === positions[i][j+2] && positions[i][j] === positions[i][j+3]) {
+                    // checks to see if there is four of a kind left diagonal
+                    if (positions[i][j] === positions[i-1][j+1] && positions[i][j] === positions[i-2][j+2] && positions[i][j] === positions[i-3][j+3]) {
                         displayWin()
-                    } else if (positions[i][j] === positions[i-1][j+1] && positions[i][j] === positions[i-2][j+2] && positions[i][j] === positions[i-3][j+3]) {
-                        displayWin()
+                    // checks to see if there is four of a kind right diagonal
                     } else if (positions[i][j] === positions[i+1][j+1] && positions[i][j] === positions[i+2][j+2] && positions[i][j] === positions[i+3][j+3]) {
                         displayWin()
-                    } 
+                    }
+                // if it is the first three columns 
                 } else if (i<3) {
-                    if (positions[i][j] === positions[i][j+1] && positions[i][j] === positions[i][j+2] && positions[i][j] === positions[i][j+3]) {
-                        displayWin()
-                    } else if (positions[i][j] === positions[i+1][j+1] && positions[i][j] === positions[i+2][j+2] && positions[i][j] === positions[i+3][j+3]) {
+                    // checks for right diagonal
+                    if (positions[i][j] === positions[i+1][j+1] && positions[i][j] === positions[i+2][j+2] && positions[i][j] === positions[i+3][j+3]) {
                         displayWin()
                     } 
+                // else (last three columns)
                 } else {
-                    if (positions[i][j] === positions[i][j+1] && positions[i][j] === positions[i][j+2] && positions[i][j] === positions[i][j+3]) {
-                        displayWin()
-                    } else if (positions[i][j] === positions[i-1][j+1] && positions[i][j] === positions[i-2][j+2] && positions[i][j] === positions[i-3][j+3]) {
+                    // checks for left diagonal
+                    if (positions[i][j] === positions[i-1][j+1] && positions[i][j] === positions[i-2][j+2] && positions[i][j] === positions[i-3][j+3]) {
                         displayWin()
                     }
                 }
             }
         }
     }
+    // runs through the first 4 columns
     for (let i=0; i<4; i++) {
+        // runs through all of the rows
         for (let j=0; j<6; j++) {
+            // checks to see if there is a horizontal 4 of a kind
             if (positions[i][j]!='w' && positions[i][j] === positions[i+1][j] && positions[i][j] === positions[i+2][j] && positions[i][j] === positions[i+3][j]) {
                 displayWin()
             }
         }
     }
 }
-
-function clickedColumn (e) {
-    let column = parseInt(e.currentTarget.id.slice(1,2))
-    if (currentSetUp[column-1]>0) {
-        addCoin(currentSetUp[column-1], column, e)
+// function that displays who won and adds play again button
+function displayWin () {
+    // creates h1 element, sets it to newH2 
+    var newH2 = document.createElement('h2');
+    // creates a button element, sets it to newButton
+    var newButton = document.createElement('button');
+    // changes id of new button to 'reset'
+    newButton.id = 'reset'
+    // if it is red's turn, creates text node 'Red Wins'
+    if (turn) {
+        var newText = document.createTextNode("Red Win's!");
     }
-    currentSetUp[column-1]--
-    turn = !turn
-    changeTurn()
+    // if it is black's turn, creates text node 'Black Wins'
+    else {
+        var newText = document.createTextNode("Black Win's!");
+    }
+    // creates new text node for try again button
+    var newText2 = document.createTextNode("Play Again?");
+    // appends text nodes to new button and h2
+    newButton.appendChild(newText2)
+    newH2.appendChild(newText);
+    // adds the new elements to 'winner' div
+    var destination = document.getElementById('winner');
+    destination.appendChild(newH2);
+    destination.appendChild(newButton);
+    // runs the function lockGame
+    lockGame()
+    // adds a click event lister to the new button that runs reset function
+    document.getElementById('reset').addEventListener('click', reset);
 }
-
+// locks the game up so that no more pieces can be added
+function lockGame() {
+    // removes click event listener from each column
+    columns.forEach (column => {
+        column.removeEventListener('click', clickedColumn);
+    })
+    // removes mouseover event listener for each column
+    columns.forEach (column => {
+        column.removeEventListener('mouseover', showCoin);
+    })
+    // removes mouseout event listener for each column
+    columns.forEach (column => {
+        column.removeEventListener('mouseout', hideCoin);
+    })
+}
+// function that reloads the page
+function reset () {
+    window.location.reload();
+}
+// changes the turn from black/red
 function changeTurn () {
+    // changes variable turn that keeps track of turn
+    turn = !turn
+    // switches the turn p element's innerHTML to say whose turn it is
     if (turn) {
         document.querySelector('#turn').innerHTML = "It is Red's turn"
     } else {
