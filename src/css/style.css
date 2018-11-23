@@ -12,6 +12,7 @@ h1 {
     font-size: 3.5em;
 }
 p {
+    color: #141414;
     margin: 0 auto;
     font-size: 1.75em;
 }
@@ -51,7 +52,7 @@ p {
     width: 45px;
     height: 45px;
     border-radius: 50%;
-    background-color: black;
+    background-color: #141414;
     position: relative;
 }
 #winner {
@@ -67,7 +68,7 @@ p {
     height: 50px;
     border-radius: 20px;
     background-color: darkolivegreen;
-    border: 1px solid black;
-    box-shadow: 2px 2px #800000;
+    border: 1px solid #141414;
+    box-shadow: 1px 1px #800000;
 }
 

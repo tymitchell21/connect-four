@@ -196,7 +196,7 @@ function changeTurn () {
         document.querySelector('#turn').style.color = "#800000"
     } else {
         document.querySelector('#turn').innerHTML = "It is Black's turn"
-        document.querySelector('#turn').style.color = "black"
+        document.querySelector('#turn').style.color = "#141414"
     }
 }
 
