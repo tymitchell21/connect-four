@@ -193,8 +193,10 @@ function changeTurn () {
     // switches the turn p element's innerHTML to say whose turn it is
     if (turn) {
         document.querySelector('#turn').innerHTML = "It is Red's turn"
+        document.querySelector('#turn').style.color = "#800000"
     } else {
         document.querySelector('#turn').innerHTML = "It is Black's turn"
+        document.querySelector('#turn').style.color = "black"
     }
 }
 
