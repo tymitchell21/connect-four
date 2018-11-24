@@ -161,10 +161,12 @@ function displayWin () {
     // if it is red's turn, creates text node 'Red Wins'
     if (turn) {
         var newText = document.createTextNode("Red Wins!");
+        newH2.style.color = "#800000"
     }
     // if it is black's turn, creates text node 'Black Wins'
     else {
         var newText = document.createTextNode("Black Wins!");
+        newH2.style.color = "#141414"
     }
     // creates new text node for try again button
     var newText2 = document.createTextNode("Play Again?");
