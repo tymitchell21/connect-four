@@ -88,6 +88,19 @@ function gameTracker (column, row) {
         positions[column-1][row-1] = 'b'
     }
 }
+// changes the turn from black/red
+function changeTurn () {
+    // changes variable turn that keeps track of turn
+    turn = !turn
+    // switches the turn p element's innerHTML to say whose turn it is
+    if (turn) {
+        document.querySelector('#turn').innerHTML = "It is Red's turn"
+        document.querySelector('#turn').style.color = "#800000"
+    } else {
+        document.querySelector('#turn').innerHTML = "It is Black's turn"
+        document.querySelector('#turn').style.color = "#141414"
+    }
+}
 // function that checks to see if anybody has won
 function checkWin () {
     // runs through the columns
@@ -184,19 +197,45 @@ function lockGame() {
 }
 // function that reloads the page
 function reset () {
-    window.location.reload();
+    releaseCoins()
+    
 }
-// changes the turn from black/red
-function changeTurn () {
-    // changes variable turn that keeps track of turn
-    turn = !turn
-    // switches the turn p element's innerHTML to say whose turn it is
-    if (turn) {
-        document.querySelector('#turn').innerHTML = "It is Red's turn"
-        document.querySelector('#turn').style.color = "#800000"
-    } else {
-        document.querySelector('#turn').innerHTML = "It is Black's turn"
-        document.querySelector('#turn').style.color = "#141414"
+// function that releases coins from game
+function releaseCoins() {
+    // sets all box divs to boxes array
+    let boxes = document.querySelectorAll(".box");
+    // initializes pos array
+    let pos = []
+    // loops through boxes array
+    for (let i=0; i<boxes.length; i++) {
+        // checks to see if there is a disk in the current box
+        if (boxes[i].lastElementChild) {
+            // sets the value of each position in the pos array to 0
+            pos[i] = 0
+        }
+    }
+    // sets a setInterval
+    var myVar = setInterval(myTimer, 1)
+    // starts the timer
+    function myTimer () { 
+        // loops through the boxes
+        for (let j=0; j<boxes.length; j++) {
+            // checks to see if the pos values have reached 1000
+            if (pos[j]>750) {
+                // clears the time interval
+                clearInterval(myVar);
+                // reloads the page
+                window.location.reload();
+            } else {
+                // checks to see if there is a disk in the current box
+                if (boxes[j].lastElementChild) {
+                    // adds 1 to the pos array value associated with the current box
+                    pos[j]+=2
+                    // sets the current box's top position value to the pos array value associated with it
+                    boxes[j].lastElementChild.style.top = pos[j] + 'px'
+                }
+            }
+        }
     }
 }
 
