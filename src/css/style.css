@@ -10,11 +10,18 @@ body {
 h1 {
     color: darkolivegreen;
     font-size: 3.5em;
+    margin: 0 auto;
 }
 p {
     color: #141414;
-    margin: 0 auto;
+    margin: 5px auto;
     font-size: 1.75em;
+    background-color: darkslategray;
+    width: 220px;
+    padding: 5px 10px; 
+    border-radius: 15px;
+    border: 1px solid #141414;
+    box-shadow: 1px 1px #141414;
 }
 #game-wrap {
     width: fit-content;
@@ -60,7 +67,9 @@ p {
 }
 #winner h2 {
     font-size: 3em;
+    font-weight: bold;
     color: #141414;
+    margin: 15px auto;
 }
 #reset {
     font-size: 1em;
