@@ -103,6 +103,15 @@ function changeTurn () {
 }
 // function that checks to see if anybody has won
 function checkWin () {
+    // if it is red's turn, creates text node 'Red Wins'
+    let whoWins
+    if (turn) {
+        whoWins = "Red Wins!"
+    }
+    // if it is black's turn, creates text node 'Black Wins'
+    else {
+        whoWins = "Black Wins!"
+    }
     // runs through the columns
     for (let i=0; i<positions.length; i++) {
         // runs through the top three rows
@@ -112,28 +121,28 @@ function checkWin () {
                 // then it checks to see if there is four of a kind vertical
                 if (positions[i][j] === positions[i][j+1] && positions[i][j] === positions[i][j+2] && positions[i][j] === positions[i][j+3]) {
                     // runs function displayWin
-                    displayWin()
+                    displayWin(whoWins)
                 }
                 // if i = 3, or it is in the middle column
                 if (i===3) {
                     // checks to see if there is four of a kind left diagonal
                     if (positions[i][j] === positions[i-1][j+1] && positions[i][j] === positions[i-2][j+2] && positions[i][j] === positions[i-3][j+3]) {
-                        displayWin()
+                        displayWin(whoWins)
                     // checks to see if there is four of a kind right diagonal
                     } else if (positions[i][j] === positions[i+1][j+1] && positions[i][j] === positions[i+2][j+2] && positions[i][j] === positions[i+3][j+3]) {
-                        displayWin()
+                        displayWin(whoWins)
                     }
                 // if it is the first three columns 
                 } else if (i<3) {
                     // checks for right diagonal
                     if (positions[i][j] === positions[i+1][j+1] && positions[i][j] === positions[i+2][j+2] && positions[i][j] === positions[i+3][j+3]) {
-                        displayWin()
+                        displayWin(whoWins)
                     } 
                 // else (last three columns)
                 } else {
                     // checks for left diagonal
                     if (positions[i][j] === positions[i-1][j+1] && positions[i][j] === positions[i-2][j+2] && positions[i][j] === positions[i-3][j+3]) {
-                        displayWin()
+                        displayWin(whoWins)
                     }
                 }
             }
@@ -145,29 +154,43 @@ function checkWin () {
         for (let j=0; j<6; j++) {
             // checks to see if there is a horizontal 4 of a kind
             if (positions[i][j]!='w' && positions[i][j] === positions[i+1][j] && positions[i][j] === positions[i+2][j] && positions[i][j] === positions[i+3][j]) {
-                displayWin()
+                displayWin(whoWins)
             }
         }
     }
+    let tie = true
+    // runs through all the columns
+    for (let i=0; i<positions.length; i++) {
+        // runs through all of the rows
+        for (let j=0; j<6; j++) {
+            // checks to see if current position equals 'w'
+            if (positions[i][j]=='w') {
+                // sets tie to false
+                tie = false
+            }
+        }
+    }
+    // if tie is true, calls function displayWin with value "it is a tie!"
+    if (tie) displayWin("It is a tie!")
 }
 // function that displays who won and adds play again button
-function displayWin () {
+function displayWin (whoWins) {
     // creates h1 element, sets it to newH2 
     var newH2 = document.createElement('h2');
     // creates a button element, sets it to newButton
     var newButton = document.createElement('button');
     // changes id of new button to 'reset'
     newButton.id = 'reset'
-    // if it is red's turn, creates text node 'Red Wins'
+    // if it is red's turn, sets newH2 font color to red
     if (turn) {
-        var newText = document.createTextNode("Red Wins!");
         newH2.style.color = "#800000"
     }
-    // if it is black's turn, creates text node 'Black Wins'
+    // if it is black's turn, sets newH2 font color to black
     else {
-        var newText = document.createTextNode("Black Wins!");
         newH2.style.color = "#141414"
     }
+    // sets newText to whoWins variable
+    var newText = document.createTextNode(whoWins);
     // creates new text node for try again button
     var newText2 = document.createTextNode("Play Again?");
     // appends text nodes to new button and h2
