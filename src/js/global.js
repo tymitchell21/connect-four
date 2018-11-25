@@ -182,7 +182,7 @@ function displayWin (whoWins) {
     // changes id of new button to 'reset'
     newButton.id = 'reset'
     // if it is red's turn, sets newH2 font color to red
-    if (turn) {
+    if (turn && whoWins!= "It is a tie!") {
         newH2.style.color = "#800000"
     }
     // if it is black's turn, sets newH2 font color to black
