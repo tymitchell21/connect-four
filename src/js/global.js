@@ -11,11 +11,11 @@ function clickedColumn (e) {
     if (currentSetUp[column-1]>0) {
         // calls the function addCoin and passes the free spaces, column number, and e
         addCoin(currentSetUp[column-1], column, e)
+        // subtracts one from currentSetUp[column-1], representing one less free space in column
+        currentSetUp[column-1]--
+        // runs the function changeTurn
+        changeTurn()
     }
-    // subtracts one from currentSetUp[column-1], representing one less free space in column
-    currentSetUp[column-1]--
-    // runs the function changeTurn
-    changeTurn()
 }
 // shows a coin above the column that the mouse is hovering over
 function showCoin (e) {
