@@ -157,33 +157,26 @@ function checkWin () {
     // if tie is true, calls function displayWin with value "it is a tie!"
     if (tie) displayWin("It is a tie!")
 }
-// function that displays who won and adds play again button
-function displayWin (whoWins) {
-    // creates h1 element, sets it to newH2 
-    var newH2 = document.createElement('h2');
-    // creates a button element, sets it to newButton
-    var newButton = document.createElement('button');
-    // changes id of new button to 'reset'
-    newButton.id = 'reset'
-    // if it is red's turn, sets newH2 font color to red
-    if (turn && whoWins!= "It is a tie!") {
-        newH2.style.color = "#800000"
-    }
-    // if it is black's turn, sets newH2 font color to black
-    else {
-        newH2.style.color = "#141414"
-    }
-    // sets newText to whoWins variable
-    var newText = document.createTextNode(whoWins);
-    // creates new text node for try again button
-    var newText2 = document.createTextNode("Play Again?");
-    // appends text nodes to new button and h2
-    newButton.appendChild(newText2)
-    newH2.appendChild(newText);
-    // adds the new elements to 'winner' div
+// creates a new element
+function createWinner (element, text, color, id) {
+    var newElement = document.createElement(element);
+    if (id) newElement.id = id;
+    newElement.style.color = color
+    var newText = document.createTextNode(text);
+    newElement.appendChild(newText)
     var destination = document.getElementById('winner');
-    destination.appendChild(newH2);
-    destination.appendChild(newButton);
+    destination.appendChild(newElement);
+}
+// function that displays the winner and try again button
+function displayWin (whoWins) {
+    if (turn && whoWins!= "It is a tie!") {
+        createWinner('h2', whoWins ,"#800000")
+    }
+    else {
+        createWinner('h2', whoWins ,"#141414")
+    }
+    createWinner('button', "Play Again?" ,"#141414", 'reset')
+
     // runs the function lockGame
     lockGame()
     // adds a click event lister to the new button that runs reset function
