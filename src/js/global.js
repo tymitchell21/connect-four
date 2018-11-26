@@ -118,23 +118,14 @@ function checkWin () {
                     // runs function displayWin
                     displayWin(whoWins)
                 }
-                // if i = 3, or it is in the middle column
-                if (i===3) {
-                    // checks to see if there is four of a kind left diagonal
-                    if (positions[i][j] === positions[i-1][j+1] && positions[i][j] === positions[i-2][j+2] && positions[i][j] === positions[i-3][j+3]) {
-                        displayWin(whoWins)
-                    // checks to see if there is four of a kind right diagonal
-                    } else if (positions[i][j] === positions[i+1][j+1] && positions[i][j] === positions[i+2][j+2] && positions[i][j] === positions[i+3][j+3]) {
-                        displayWin(whoWins)
-                    }
-                // if it is the first three columns 
-                } else if (i<3) {
+                if (i<=3) {
                     // checks for right diagonal
                     if (positions[i][j] === positions[i+1][j+1] && positions[i][j] === positions[i+2][j+2] && positions[i][j] === positions[i+3][j+3]) {
                         displayWin(whoWins)
                     } 
                 // else (last three columns)
-                } else {
+                } 
+                if (i>=3) {
                     // checks for left diagonal
                     if (positions[i][j] === positions[i-1][j+1] && positions[i][j] === positions[i-2][j+2] && positions[i][j] === positions[i-3][j+3]) {
                         displayWin(whoWins)
