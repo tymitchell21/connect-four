@@ -9,19 +9,14 @@ function clickedColumn (e) {
     let column = parseInt(e.currentTarget.id.slice(1,2))
     // currentSetUp keeps track of the # of free space in each column.  if it is greater than zero, add a coin
     if (currentSetUp[column-1]>0) {
-        // calls the function addCoin and passes the free spaces, column number, and e
         addCoin(currentSetUp[column-1], column, e)
-        // subtracts one from currentSetUp[column-1], representing one less free space in column
         currentSetUp[column-1]--
-        // runs the function changeTurn
         changeTurn()
     }
 }
 // shows a coin above the column that the mouse is hovering over
 function showCoin (e) {
-    // grabs the current column that the mouse is over and sets it to currentColumn
     const currentColumn = e.currentTarget;
-    // grabs the first element child of the current child (a div about the rest of the game), and sets it to destination
     const destination = currentColumn.firstElementChild
     // if it is red's turn, displays a red coin above the column
     if (turn) display ('red', destination)
@@ -158,14 +153,12 @@ function checkWin () {
             }
         }
     }
+    // checks for a tie
     let tie = true
-    // runs through all the columns
     for (let i=0; i<positions.length; i++) {
-        // runs through all of the rows
         for (let j=0; j<6; j++) {
             // checks to see if current position equals 'w'
             if (positions[i][j]=='w') {
-                // sets tie to false
                 tie = false
             }
         }
@@ -245,16 +238,13 @@ function releaseCoins() {
     function myTimer () { 
         // loops through the boxes
         for (let j=0; j<boxes.length; j++) {
-            // checks to see if the pos values have reached 1000
+            // checks to see if the pos values have reached 750
             if (pos[j]>750) {
-                // clears the time interval
                 clearInterval(myVar);
-                // reloads the page
                 window.location.reload();
             } else {
                 // checks to see if there is a disk in the current box
                 if (boxes[j].lastElementChild) {
-                    // adds 1 to the pos array value associated with the current box
                     pos[j]+=2
                     // sets the current box's top position value to the pos array value associated with it
                     boxes[j].lastElementChild.style.top = pos[j] + 'px'
