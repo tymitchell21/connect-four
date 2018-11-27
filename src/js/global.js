@@ -1,7 +1,15 @@
 let columns = document.querySelectorAll(".column");
 let turn = false;
 let currentSetUp = [6,6,6,6,6,6,6]
-let positions = [['w','w','w','w','w','w'],['w','w','w','w','w','w'],['w','w','w','w','w','w'],['w','w','w','w','w','w'],['w','w','w','w','w','w'],['w','w','w','w','w','w'],['w','w','w','w','w','w']]
+let positions = [
+    ['w','w','w','w','w','w'],
+    ['w','w','w','w','w','w'],
+    ['w','w','w','w','w','w'],
+    ['w','w','w','w','w','w'],
+    ['w','w','w','w','w','w'],
+    ['w','w','w','w','w','w'],
+    ['w','w','w','w','w','w']
+]
 
 // runs when a column is clicked
 function clickedColumn (e) {
