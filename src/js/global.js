@@ -181,7 +181,8 @@ function reset() {
                 window.location.reload();
             } else {
                 if (boxes[j].lastElementChild) {
-                    pos[j]+=2
+                    let ran = Math.floor(Math.random() * (2 + 1)) + 1
+                    pos[j]+=ran
                     boxes[j].lastElementChild.style.top = pos[j] + 'px'
                 }
             }
