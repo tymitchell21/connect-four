@@ -164,12 +164,7 @@ function lockGame() {
     })
 }
 // function that reloads the page
-function reset () {
-    releaseCoins()
-    
-}
-// function that releases coins from game
-function releaseCoins() {
+function reset() {
     let boxes = document.querySelectorAll(".box");
     let pos = []
     for (let i=0; i<boxes.length; i++) {
