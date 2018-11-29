@@ -51,13 +51,15 @@ function addCoin(row, column, e) {
 
     var pos = -50*row;
     newCoin.style.top = pos + 'px';
-    var id = setInterval(frame, 5);
+    var id = setInterval(frame, 1);
+    var add = .1;
     
     function frame() {
-        if (pos == 0) {
+        if (pos >= 0.0001) {
             clearInterval(id);
         } else {
-            pos++; 
+            pos+=add; 
+            add+=.01;
             newCoin.style.top = pos + 'px';
         }
     }
@@ -173,7 +175,8 @@ function reset() {
         }
     }
 
-    var myVar = setInterval(myTimer, 1)
+    var myVar = setInterval(myTimer, 10)
+    var add = .1;
     function myTimer () { 
         for (let j=0; j<boxes.length; j++) {
             if (pos[j]>750) {
@@ -181,8 +184,9 @@ function reset() {
                 window.location.reload();
             } else {
                 if (boxes[j].lastElementChild) {
-                    let ran = Math.floor(Math.random() * (2.5 + 1))
-                    pos[j]+=ran
+                    let ran = Math.floor(Math.random() * (1 + 1))
+                    pos[j]+=add + ran;
+                    add+=.01;
                     boxes[j].lastElementChild.style.top = pos[j] + 'px'
                 }
             }
